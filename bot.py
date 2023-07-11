@@ -83,6 +83,30 @@ async def wind_speed(ctx, *, item):
   mph = str(sp_mph) + " mph"
   await ctx.send(kph + ", " + mph)
 
+@bot.command()
+async def weather_forecast_tomorrow(ctx, *, item):
+  url = "https://weatherapi-com.p.rapidapi.com/forecast.json"
+  querystring = {"q":item,"dt":1}
+  headers = {
+    "X-RapidAPI-Key": "e68f6c4d38msh54f97756455af10p154872jsn68a36fe73521",
+    "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
+  }
+  response = requests.get(url, headers=headers, params=querystring)
+  # print(response.json())
+  output = response.json()
+  conditions = output['forecast']['forecastday'][0]['day']['condition']['text']
+  mt = output['forecast']['forecastday'][0]['day']['maxtemp_c']
+  max_temp = str(mt) + " degrees celsius"
+  mt2 = output['forecast']['forecastday'][0]['day']['mintemp_c']
+  min_temp = str(mt2) + " degrees celsius"
+  cor = output['forecast']['forecastday'][0]['day']['daily_chance_of_rain']
+  cos = output['forecast']['forecastday'][0]['day']['daily_chance_of_snow']
+  await ctx.send(conditions)
+  await ctx.send("Maximum temperature: " + max_temp)
+  await ctx.send("Minimum temperature: " + min_temp)
+  await ctx.send("Chance of rain: " + str(cor) + "%")
+  await ctx.send("Chance of snow: " + str(cos) + "%")
+
 with open("BOT_TOKEN.txt", "r") as token_file:
     TOKEN = token_file.read()
     print("Token file read")
