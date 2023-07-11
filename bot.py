@@ -56,7 +56,7 @@ async def calc(ctx, x, fn, y):
 
 
 @bot.command()
-async def weather(ctx, *, item):
+async def current_weather(ctx, *, item):
   url = "https://weatherapi-com.p.rapidapi.com/current.json"
   querystring = {"q": item}
   headers = {
@@ -66,6 +66,22 @@ async def weather(ctx, *, item):
   response = requests.get(url, headers=headers, params=querystring)
   output = response.json()
   await ctx.send(output['current']['condition']['text'])
+
+@bot.command()
+async def wind_speed(ctx, *, item):
+  url = "https://weatherapi-com.p.rapidapi.com/current.json"
+  querystring = {"q": item}
+  headers = {
+    "X-RapidAPI-Key": "e68f6c4d38msh54f97756455af10p154872jsn68a36fe73521",
+    "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
+  }
+  response = requests.get(url, headers=headers, params=querystring)
+  output = response.json()
+  sp_kph = output['current']['wind_kph']
+  sp_mph = output['current']['wind_mph']
+  kph = str(sp_kph) + " kph"
+  mph = str(sp_mph) + " mph"
+  await ctx.send(kph + ", " + mph)
 
 with open("BOT_TOKEN.txt", "r") as token_file:
     TOKEN = token_file.read()
