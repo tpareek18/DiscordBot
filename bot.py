@@ -114,7 +114,12 @@ async def weather_forecast_tomorrow(ctx, *, item):
 @bot.command()
 async def translate(ctx, *, input):
   url = "https://nlp-translation.p.rapidapi.com/v1/translate"
-  querystring = {"text":"Hello, world!!","to":"es","from":"en"}
+  input = input.strip()
+  words = input.split()
+  target_lang = words[-1]
+  original_lang = words[-2]
+  tex = input[:-5]
+  querystring = {"text":tex,"to":target_lang,"from":original_lang}
   headers = {
     "X-RapidAPI-Key": api_key,
     "X-RapidAPI-Host": "nlp-translation.p.rapidapi.com"
@@ -122,6 +127,7 @@ async def translate(ctx, *, input):
   response = requests.get(url, headers=headers, params=querystring)
   print(response.json())
   output = response.json()
+  await ctx.send(output['translated_text'][target_lang])
 
 with open("BOT_TOKEN.txt", "r") as token_file:
     TOKEN = token_file.read()
