@@ -12,7 +12,11 @@ bot.videos = [
   'https://www.youtube.com/watch?v=hY7m5jjJ9mM'
 ]
 bot.happyList = []
+api_key = ""
 
+with open("RAPIDAPI_KEY.txt", "r") as api_file:
+    api_key = api_file.read()
+    print("API key read")
 
 @bot.command()
 async def hello(ctx):
@@ -24,7 +28,7 @@ async def cat(ctx):
   await ctx.send(random.choice(bot.videos))
 
 
-# * used to allow user to input
+# * used to allow user to input multiple unknown inputs
 # item variable is what stores user input
 @bot.command()
 async def happy(ctx, *, item):
@@ -60,7 +64,7 @@ async def current_weather(ctx, *, item):
   url = "https://weatherapi-com.p.rapidapi.com/current.json"
   querystring = {"q": item}
   headers = {
-    "X-RapidAPI-Key": "e68f6c4d38msh54f97756455af10p154872jsn68a36fe73521",
+    "X-RapidAPI-Key": api_key,
     "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
   }
   response = requests.get(url, headers=headers, params=querystring)
@@ -72,7 +76,7 @@ async def wind_speed(ctx, *, item):
   url = "https://weatherapi-com.p.rapidapi.com/current.json"
   querystring = {"q": item}
   headers = {
-    "X-RapidAPI-Key": "e68f6c4d38msh54f97756455af10p154872jsn68a36fe73521",
+    "X-RapidAPI-Key": api_key,
     "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
   }
   response = requests.get(url, headers=headers, params=querystring)
@@ -88,7 +92,7 @@ async def weather_forecast_tomorrow(ctx, *, item):
   url = "https://weatherapi-com.p.rapidapi.com/forecast.json"
   querystring = {"q":item,"dt":1}
   headers = {
-    "X-RapidAPI-Key": "e68f6c4d38msh54f97756455af10p154872jsn68a36fe73521",
+    "X-RapidAPI-Key": api_key,
     "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com"
   }
   response = requests.get(url, headers=headers, params=querystring)
@@ -106,6 +110,18 @@ async def weather_forecast_tomorrow(ctx, *, item):
   await ctx.send("Minimum temperature: " + min_temp)
   await ctx.send("Chance of rain: " + str(cor) + "%")
   await ctx.send("Chance of snow: " + str(cos) + "%")
+
+@bot.command()
+async def translate(ctx, *, input):
+  url = "https://nlp-translation.p.rapidapi.com/v1/translate"
+  querystring = {"text":"Hello, world!!","to":"es","from":"en"}
+  headers = {
+    "X-RapidAPI-Key": api_key,
+    "X-RapidAPI-Host": "nlp-translation.p.rapidapi.com"
+  }
+  response = requests.get(url, headers=headers, params=querystring)
+  print(response.json())
+  output = response.json()
 
 with open("BOT_TOKEN.txt", "r") as token_file:
     TOKEN = token_file.read()
