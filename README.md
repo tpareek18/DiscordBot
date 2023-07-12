@@ -139,8 +139,8 @@ This is a multi-purpose Discord Bot that can be integrated into any Discord Serv
 To setup, all you need to do is clone this repository and run the bot.py file locally whenever using the bot. 
 
 ## Requirements:
-1. Your own Discord Bot Token when creating the bot. Add the Bot to server of your choice.
-2. Rapid API Key which is free of charge. Can be done at https://rapidapi.com/
+1. You need to copy your own Discord Bot Token when creating the bot and add the token to a separate file called **BOT_TOKEN.txt**.
+2. You need to get a Rapid API Key which is free of charge and can be done at https://rapidapi.com/. Then create a file called **RAPIDAPI_KEY.txt** and add your key there.
 3. Subscription to the Basic plan of the APIs below which are also free of charge.
 - https://rapidapi.com/gofitech/api/nlp-translation/pricing
 - https://rapidapi.com/weatherapi/api/weatherapi-com/pricing
